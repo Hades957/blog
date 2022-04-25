@@ -33,3 +33,31 @@ logger.info('info')
 * INFO = 信息
 * DEBUG = 调试
 * NOTSET = 未设置
+
+# 静态资源文件
+1. 准备静态资源文件，放置在项目根目录下static文件夹内
+2. 指定静态文件的加载路径STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+3. 配置完成后，运行程序，测试结果  http://127.0.0.1:8000/static/index.html
+
+# 创建用户模块应用
+```
+1. 创建子应用users
+python manage.py startapp users
+2. 注册用户模块应用
+INSTALLED_APPS = [
+    ...
+    'users.apps.UsersConfig',
+]
+3. 准备模板目录并设置模板路径
+    创建模板文件夹templates并在settings文件中设置模板路径
+4. 定义用户注册视图
+    * 将static文件夹下在register.html拖拽到templates文件中
+    * 在users.views.py文件中定义视图
+5. 定义用户注册路由
+    * 在users子应用中创建urls.py文件，并定义子路由
+    * 在工程的urls.py总路由中添加子应用路由引导
+    * 运行测试程序
+6.修改静态文件加载方式
+    * 是由于静态资源加载是相对路径，因此我们需要修改静态资源的加载方式
+    * 运行测试程序，没有问题   http://127.0.0.1:8000/users/register
+```
