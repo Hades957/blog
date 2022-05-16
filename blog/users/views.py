@@ -30,6 +30,7 @@ class RegisterView(View):
         return render(request, 'register.html')
 
 
+# 验证码视图
 class ImageCodeView(View):
     """验证码"""
 
@@ -58,6 +59,7 @@ class ImageCodeView(View):
         return HttpResponse(image, content_type='image/jpeg')
 
 
+# 短信验证码视图
 class SmsCodeView(View):
 
     def get(self, request):
