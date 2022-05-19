@@ -13,6 +13,8 @@ class User(AbstractUser):
     # 简介信息
     user_desc = models.CharField(max_length=500, blank=True)
 
+    # 修改认证的字段
+    USERNAME_FIELD = 'mobile'
     class Meta:
         db_table = 'tb_users'  # 表名
         # admin后台显示

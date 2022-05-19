@@ -2,7 +2,7 @@
 # * 进行users子应用的视图路由
 from django.urls import path
 
-from users.views import RegisterView, ImageCodeView, SmsCodeView
+from users.views import RegisterView, ImageCodeView, SmsCodeView, LoginView
 
 urlpatterns = [
     # 参数1： 路由
@@ -13,5 +13,7 @@ urlpatterns = [
     path('imagecode/', ImageCodeView.as_view(), name='imagecode'),
     # 短信验证码的路由
     path('smscode/', SmsCodeView.as_view(), name='smscode'),
+    # 登录路由
+    path('login/', LoginView.as_view(), name='login'),
 ]
 # 2.在工程的urls.py总路由中添加子应用路由引导
