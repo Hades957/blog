@@ -17,7 +17,7 @@ import logging
 from random import randint
 from libs.yuntongxun.sms import CCP
 from users.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 
 logger = logging.getLogger('django')
 
@@ -239,4 +239,22 @@ class LoginView(View):
             response.set_cookie('username', user.username, max_age=14 * 24 * 3600)
 
         # 7. 返回响应
+        return response
+
+
+# 退出登录视图
+class LogoutView(View):
+    """
+    1. session数据清除
+    2. 删除部分cookie数据
+    3. 跳转到首页
+    """
+
+    def get(self, request):
+        # 1. session数据清除 通过系统的logout方法清除session数据
+        logout(request)
+        # 2. 删除部分cookie数据
+        response = redirect(reverse('home:index'))
+        response.delete_cookie('is_login')
+        # 3. 跳转到首页
         return response
