@@ -1,5 +1,6 @@
 import re
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import DatabaseError
 from django.shortcuts import render, redirect
 
@@ -226,7 +227,13 @@ class LoginView(View):
         login(request, user)
         # 5. 根据用户选择的是否记录登录状态来判断
         # 6. 为了首页显示我们需要设置一些cookie信息
-        response = redirect(reverse('home:index'))
+
+        # 根据next参数来进行页面的跳转
+        next_page = request.GET.get('next')
+        if next_page:
+            response = redirect(next_page)
+        else:
+            response = redirect(reverse('home:index'))
         if remember != 'on':  # 没有记住用户信息
             # 0为浏览器关闭之后
             request.session.set_expiry(0)
@@ -328,6 +335,8 @@ class ForgetPasswordView(View):
 
 
 # 用户中心视图
-class UserCenterView(View):
+# 如果用户未登录的话，则会进行默认的跳转
+# 默认的跳转链接是：accounts/login/?next=/xxx/
+class UserCenterView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'center.html')
