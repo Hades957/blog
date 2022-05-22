@@ -339,4 +339,13 @@ class ForgetPasswordView(View):
 # 默认的跳转链接是：accounts/login/?next=/xxx/
 class UserCenterView(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'center.html')
+        # 获取登录用户的信息
+        user = request.user
+        context = {
+            'username': user.username,
+            'mobile': user.mobile,
+            'avatar': user.avatar.url if user.avatar else None,
+            'user_desc': user.user_desc
+        }
+        # 组织获取用户的信息
+        return render(request, 'center.html', context)
