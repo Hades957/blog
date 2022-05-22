@@ -2,7 +2,8 @@
 # * 进行users子应用的视图路由
 from django.urls import path
 
-from users.views import RegisterView, ImageCodeView, SmsCodeView, LoginView, LogoutView, ForgetPasswordView
+from users.views import RegisterView, ImageCodeView, SmsCodeView, LoginView, LogoutView, ForgetPasswordView, \
+    UserCenterView
 
 urlpatterns = [
     # 参数1： 路由
@@ -17,8 +18,9 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     # 退出登录路由
     path('logout/', LogoutView.as_view(), name='logout'),
-
     # 忘记密码路由
     path('forgetpassword/', ForgetPasswordView.as_view(), name='forgetpassword'),
+    # 个人中心路由
+    path('center/', UserCenterView.as_view(), name='center')
 ]
 # 2.在工程的urls.py总路由中添加子应用路由引导

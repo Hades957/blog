@@ -325,3 +325,9 @@ class ForgetPasswordView(View):
         response = redirect(reverse('users:login'))
         # 7. 返回响应
         return response
+
+
+# 用户中心视图
+class UserCenterView(View):
+    def get(self, request):
+        return render(request, 'center.html')
