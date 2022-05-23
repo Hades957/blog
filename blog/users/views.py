@@ -381,3 +381,9 @@ class UserCenterView(LoginRequiredMixin, View):
         response.set_cookie('username', user.username, max_age=14 * 3600 * 24)
         # 5. 返回响应
         return response
+
+
+# 写博客视图
+class WriteBlogView(View):
+    def get(self, request):
+        return render(request, 'write_blog.html')

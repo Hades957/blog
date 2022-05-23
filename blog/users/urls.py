@@ -3,7 +3,7 @@
 from django.urls import path
 
 from users.views import RegisterView, ImageCodeView, SmsCodeView, LoginView, LogoutView, ForgetPasswordView, \
-    UserCenterView
+    UserCenterView, WriteBlogView
 
 urlpatterns = [
     # 参数1： 路由
@@ -21,6 +21,8 @@ urlpatterns = [
     # 忘记密码路由
     path('forgetpassword/', ForgetPasswordView.as_view(), name='forgetpassword'),
     # 个人中心路由
-    path('center/', UserCenterView.as_view(), name='center')
+    path('center/', UserCenterView.as_view(), name='center'),
+    # 写博客路由
+    path('writeblog/', WriteBlogView.as_view(), name='writeblog'),
 ]
 # 2.在工程的urls.py总路由中添加子应用路由引导
