@@ -349,3 +349,35 @@ class UserCenterView(LoginRequiredMixin, View):
         }
         # 组织获取用户的信息
         return render(request, 'center.html', context)
+
+    # 个人中心数据的修改
+    def post(self, request):
+        """
+        1. 接收参数
+        2. 将参数保存起来
+        3. 更新cookie信息
+        4. 刷新当前页面（重定向操作）
+        5. 返回响应
+        """
+        user = request.user
+        # 1. 接收参数
+        username = request.POST.get('username', user.username)
+        user_desc = request.POST.get('desc', user.user_desc)
+        avatar = request.FILES.get('avatar')
+        # 2. 将参数保存起来
+        try:
+            user.username = username
+            user.user_desc = user_desc
+            # 需要设置头像上传目录
+            if avatar:
+                user.avatar = avatar
+            user.save()
+        except Exception as e:
+            logger.error(e)
+            return HttpResponseBadRequest('修改失败，请稍后再试')
+        # 3. 更新cookie信息
+        # 4. 刷新当前页面（重定向操作）
+        response = redirect(reverse('users:center'))
+        response.set_cookie('username', user.username, max_age=14 * 3600 * 24)
+        # 5. 返回响应
+        return response
